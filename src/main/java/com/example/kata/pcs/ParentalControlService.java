@@ -26,6 +26,6 @@ public class ParentalControlService {
         } catch (TechnicalFailureException e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 }

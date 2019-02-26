@@ -68,4 +68,13 @@ public class ParentalControlServiceTest {
 
         assertThat(throwable).isInstanceOf(TitleNotFoundException.class);
     }
+
+    @Test
+    public void denies_watching_movie_if_system_error_occurred() throws Throwable {
+        when(movieService.getParentalControlLevel(anyString())).thenThrow(TechnicalFailureException.class);
+
+        boolean allowed = parentalControlService.canWatchMovie("PG", "123");
+
+        assertThat(allowed).isFalse();
+    }
 }
