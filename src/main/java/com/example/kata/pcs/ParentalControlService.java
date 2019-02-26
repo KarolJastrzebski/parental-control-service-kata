@@ -8,7 +8,7 @@ public class ParentalControlService {
         this.movieService = movieService;
     }
 
-    public void canWatchMovie(String preferredLevel, String movieId) {
+    public boolean canWatchMovie(String preferredLevel, String movieId) {
         try {
             movieService.getParentalControlLevel(movieId);
         } catch (TitleNotFoundException e) {
@@ -16,5 +16,6 @@ public class ParentalControlService {
         } catch (TechnicalFailureException e) {
             e.printStackTrace();
         }
+        return true;
     }
 }
