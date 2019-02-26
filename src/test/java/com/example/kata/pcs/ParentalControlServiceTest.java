@@ -40,4 +40,13 @@ public class ParentalControlServiceTest {
 
         assertThat(allowed).isTrue();
     }
+
+    @Test
+    public void allows_watching_movie_if_it_is_rated_equal_as_preferred_level() throws Throwable {
+        when(movieService.getParentalControlLevel(anyString())).thenReturn("PG");
+
+        boolean allowed = parentalControlService.canWatchMovie("PG", "123");
+
+        assertThat(allowed).isTrue();
+    }
 }
