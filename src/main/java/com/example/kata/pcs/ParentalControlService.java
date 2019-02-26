@@ -19,12 +19,10 @@ public class ParentalControlService {
         return -1;
     }
 
-    public boolean canWatchMovie(String preferredLevel, String movieId) {
+    public boolean canWatchMovie(String preferredLevel, String movieId) throws TitleNotFoundException {
         try {
             String movieLevel = movieService.getParentalControlLevel(movieId);
             return findIndex(preferredLevel) >= findIndex(movieLevel);
-        } catch (TitleNotFoundException e) {
-            e.printStackTrace();
         } catch (TechnicalFailureException e) {
             e.printStackTrace();
         }

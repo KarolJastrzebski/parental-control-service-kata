@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -57,5 +58,14 @@ public class ParentalControlServiceTest {
         boolean allowed = parentalControlService.canWatchMovie("PG", "123");
 
         assertThat(allowed).isFalse();
+    }
+
+    @Test
+    public void passes_through_not_found_exception_to_the_calling_client() throws Throwable {
+        when(movieService.getParentalControlLevel(anyString())).thenThrow(TitleNotFoundException.class);
+
+        Throwable throwable = catchThrowable(() -> parentalControlService.canWatchMovie("18", "123"));
+
+        assertThat(throwable).isInstanceOf(TitleNotFoundException.class);
     }
 }
